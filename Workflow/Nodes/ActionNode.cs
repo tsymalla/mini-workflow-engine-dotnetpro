@@ -4,12 +4,6 @@ namespace WorkflowEngine.Workflow.Nodes
 {
     public abstract class ActionNode: Node
     {
-        public ActionNode Predecessor
-        {
-            get;
-            set;
-        }
-
         public List<Transition.Transition> Successors
         {
             get;

@@ -4,7 +4,7 @@ using WorkflowEngine.Workflow.Nodes;
 
 namespace WorkflowEngine.Workflow.Transition
 {
-    public abstract class Transition
+    public class Transition
     {
         protected readonly WorkflowContext context;
 
@@ -26,14 +26,47 @@ namespace WorkflowEngine.Workflow.Transition
             set;
         }
         
-        Transition(WorkflowContext context)
+        public Func<bool> CanTransition
+        {
+            get;
+            set;
+        }
+
+        public Action ActionForward
+        {
+            get;
+            set;
+        }
+        
+        public List<string> Errors
+        {
+            get;
+            set;
+        }
+
+        public bool HasErrors
+        {
+            get
+            {
+                return Errors != null && Errors.Count > 0;
+            }
+        }
+        
+        public Transition(WorkflowContext context)
         {
             this.context = context;
         }
-        
-        public abstract Func<bool> CanTransition();
-        public abstract Action<bool> ActionForward();
-        public abstract Action<bool> ActionBackward();
-        public abstract List<string> Errors();
+
+        public void Execute()
+        {
+            if (this.CanTransition != null)
+            {
+                bool result = this.CanTransition.Invoke();
+                if (result)
+                {
+                    ActionForward?.Invoke();   
+                }
+            }
+        }
     }
 }
