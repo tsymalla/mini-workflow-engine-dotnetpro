@@ -8,19 +8,13 @@ namespace WorkflowEngine.Workflow.Transition
     {
         protected readonly WorkflowContext context;
 
-        public Node CurrentNode
+        public ActionNode CurrentNode
         {
             get;
             set;
         }
 
-        public Node PreviousNode
-        {
-            get;
-            set;
-        }
-
-        public Node NextNode
+        public ActionNode NextNode
         {
             get;
             set;
@@ -57,7 +51,12 @@ namespace WorkflowEngine.Workflow.Transition
             this.context = context;
         }
 
-        public void Execute()
+        public void OnEnter()
+        {
+            this.NextNode.Execute();
+        }
+        
+        public ActionNode Execute()
         {
             if (this.CanTransition != null)
             {
@@ -66,7 +65,11 @@ namespace WorkflowEngine.Workflow.Transition
                 {
                     ActionForward?.Invoke();   
                 }
+
+                return NextNode;
             }
+
+            return CurrentNode;
         }
     }
 }

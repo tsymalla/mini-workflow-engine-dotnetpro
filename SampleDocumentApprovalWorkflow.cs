@@ -8,19 +8,39 @@ namespace WorkflowEngine
 {
     public class SampleDocumentApprovalWorkflow: Workflow.Workflow
     {
-        private SampleDocumentApprovalWorkflowContext context;
-        
+        class DoApprovalNode: ActionNode
+        {
+            public DoApprovalNode(WorkflowContext context, string name): base(context, name)
+            {
+
+            }
+
+            public override void Execute()
+            {
+                Console.WriteLine("Sent e-mail to manager.");
+                var currentContext = context as SampleDocumentApprovalWorkflowContext;
+                if (currentContext == null)
+                {
+                    return;
+                }
+
+                currentContext.ApprovalState = APPROVAL_STATE.IN_PROGRESS;
+            }
+        }
+
         public SampleDocumentApprovalWorkflow() : base()
         {
-            this.context = new SampleDocumentApprovalWorkflowContext();
-            StartNode = new StartNode(context, "BEGIN");
-            StartNode.Successors.Add(item: new Transition(context)
+            context = new SampleDocumentApprovalWorkflowContext();
+            CurrentNode = new StartNode(context, "BEGIN");
+            var approvalNode = new DoApprovalNode(context, "IN_APPROVAL");
+            var finalNode = new EndNode(context, "FINISHED");
+
+            CurrentNode.Successors.Add(item: new Transition(context)
             {
-                PreviousNode = null,
-                NextNode = new ActivityNode(context, "IN_APPROVAL"),
+                NextNode = approvalNode,
                 CanTransition = () =>
                 {
-                    var currentContext = context;
+                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
                     if (currentContext == null)
                     {
                         return false;
@@ -30,7 +50,26 @@ namespace WorkflowEngine
                 },
                 ActionForward = () =>
                 {
-                    Console.WriteLine("Approval worked out.");
+                    Console.WriteLine("Going forward to approval state.");
+                }
+            });
+
+            approvalNode.Successors.Add(new Transition(context)
+            {
+                NextNode = finalNode,
+                CanTransition = () => 
+                {
+                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
+                    if (currentContext == null)
+                    {
+                        return false;
+                    }
+
+                    return currentContext.ApprovalState == APPROVAL_STATE.IN_PROGRESS;
+                },
+                ActionForward = () =>
+                {
+                    Console.WriteLine("Finishing approval workflow.");
                 }
             });
         }

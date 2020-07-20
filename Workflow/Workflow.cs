@@ -18,7 +18,7 @@ namespace WorkflowEngine.Workflow
 
         protected WorkflowContext context;
 
-        public StartNode StartNode
+        public ActionNode CurrentNode
         {
             get;
             set;
@@ -26,19 +26,28 @@ namespace WorkflowEngine.Workflow
 
         public void Progress()
         {
-            if (StartNode == null)
+            if (CurrentNode == null)
             {
-                throw new ArgumentNullException("Start node not defined.");
+                throw new ArgumentNullException("Current node not defined.");
+            }
+
+            if (CurrentNode is EndNode)
+            {
+                this.state = STATE.FINISHED;
+                return;
             }
             
-            var firstTransition = StartNode.Successors.First(f => f.CanTransition.Invoke());
+            var firstTransition = CurrentNode.Successors.First(f => f.CanTransition.Invoke());
             if (firstTransition == null)
             {
                 Console.WriteLine("Could not execute initial transition.");
                 return;
             }
             
-            firstTransition.Execute();
+            firstTransition.OnEnter();
+            CurrentNode = firstTransition.Execute();
+
+            this.Progress();
         }
     }
 }
