@@ -12,6 +12,7 @@ namespace WorkflowEngine
         };
         
         public APPROVAL_STATE ApprovalState { get; set; }
+        public string Decision { get; set; }
 
         public SampleDocumentApprovalWorkflowContext()
         {

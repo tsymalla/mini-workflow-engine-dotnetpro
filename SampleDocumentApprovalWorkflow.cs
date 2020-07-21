@@ -17,14 +17,22 @@ namespace WorkflowEngine
 
             public override void Execute()
             {
-                Console.WriteLine("Sent e-mail to manager.");
                 var currentContext = context as SampleDocumentApprovalWorkflowContext;
                 if (currentContext == null)
                 {
                     return;
                 }
 
-                currentContext.ApprovalState = APPROVAL_STATE.IN_PROGRESS;
+                Console.WriteLine("Please enter 'approve' or 'decline'.");
+                
+                string decision = Console.ReadLine().ToLower();
+                if (decision != "approve" && decision != "decline")
+                {
+                    this.Execute();
+                    return;
+                }
+
+                currentContext.Decision = decision;
             }
         }
 
@@ -51,6 +59,15 @@ namespace WorkflowEngine
                 ActionForward = () =>
                 {
                     Console.WriteLine("Going forward to approval state.");
+                    Console.WriteLine("Sent e-mail to manager.");
+
+                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
+                    if (currentContext == null)
+                    {
+                        return;
+                    }
+
+                    currentContext.ApprovalState = APPROVAL_STATE.IN_PROGRESS;
                 }
             });
 
@@ -65,7 +82,7 @@ namespace WorkflowEngine
                         return false;
                     }
 
-                    return currentContext.ApprovalState == APPROVAL_STATE.IN_PROGRESS;
+                    return currentContext.Decision == "approve" && currentContext.ApprovalState == APPROVAL_STATE.IN_PROGRESS;
                 },
                 ActionForward = () =>
                 {

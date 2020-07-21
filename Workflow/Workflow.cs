@@ -37,15 +37,17 @@ namespace WorkflowEngine.Workflow
                 return;
             }
             
-            var firstTransition = CurrentNode.Successors.First(f => f.CanTransition.Invoke());
-            if (firstTransition == null)
+            var firstTransition = CurrentNode.Successors.FirstOrDefault(f => f.CanTransition.Invoke());
+            if (firstTransition != null)
             {
-                Console.WriteLine("Could not execute initial transition.");
-                return;
+                firstTransition.OnEnter();
+                CurrentNode = firstTransition.Execute();
             }
             
-            firstTransition.OnEnter();
-            CurrentNode = firstTransition.Execute();
+            if (CurrentNode != null)
+            {
+                CurrentNode.Execute();
+            }
 
             this.Progress();
         }

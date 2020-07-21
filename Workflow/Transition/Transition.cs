@@ -53,7 +53,6 @@ namespace WorkflowEngine.Workflow.Transition
 
         public void OnEnter()
         {
-            this.NextNode.Execute();
         }
         
         public ActionNode Execute()
