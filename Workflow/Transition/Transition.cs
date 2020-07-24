@@ -8,13 +8,13 @@ namespace WorkflowEngine.Workflow.Transition
     {
         protected readonly WorkflowContext context;
 
-        public ActionNode CurrentNode
+        public ActionNode NodeFrom
         {
             get;
             set;
         }
 
-        public ActionNode NextNode
+        public ActionNode NodeTo
         {
             get;
             set;
@@ -65,10 +65,10 @@ namespace WorkflowEngine.Workflow.Transition
                     ActionForward?.Invoke();   
                 }
 
-                return NextNode;
+                return NodeTo;
             }
 
-            return CurrentNode;
+            return NodeFrom;
         }
     }
 }

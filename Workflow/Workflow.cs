@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using WorkflowEngine.Workflow.Nodes;
 
@@ -18,12 +19,26 @@ namespace WorkflowEngine.Workflow
 
         protected WorkflowContext context;
 
+        private List<Node> nodePool;
+
         public ActionNode CurrentNode
         {
             get;
             set;
         }
 
+        public List<Transition.Transition> Transitions
+        {
+            get;
+            set;
+        }
+
+        public Workflow()
+        {
+            nodePool = new List<Node>();
+            Transitions = new List<Transition.Transition>();
+        }
+        
         public void Progress()
         {
             if (CurrentNode == null)
@@ -37,7 +52,7 @@ namespace WorkflowEngine.Workflow
                 return;
             }
             
-            var firstTransition = CurrentNode.Successors.FirstOrDefault(f => f.CanTransition.Invoke());
+            var firstTransition = Transitions.FirstOrDefault(f => f.NodeFrom.Equals(CurrentNode) && f.CanTransition.Invoke());
             if (firstTransition != null)
             {
                 firstTransition.OnEnter();
@@ -49,7 +64,7 @@ namespace WorkflowEngine.Workflow
                 CurrentNode.Execute();
             }
 
-            this.Progress();
+            Progress();
         }
     }
 }

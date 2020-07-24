@@ -4,15 +4,8 @@ namespace WorkflowEngine.Workflow.Nodes
 {
     public abstract class ActionNode: Node
     {
-        public List<Transition.Transition> Successors
+        public ActionNode(WorkflowContext context, string name, TYPE type) : base(context, name, type)
         {
-            get;
-            set;
-        }
-
-        public ActionNode(WorkflowContext context, string name) : base(context, name)
-        {
-            this.Successors = new List<Transition.Transition>();
         }
 
         public abstract void Execute();
