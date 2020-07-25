@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 
-namespace WorkflowEngine.Workflow
+namespace WorkflowEngine
 {
     public class WorkflowEngine
     {
-        public static void Execute(Workflow wf)
+        public static void Execute(Workflow.Runner.Runner runner)
         {
-            wf.Progress();
+            runner.Run();
         }
     }
 }

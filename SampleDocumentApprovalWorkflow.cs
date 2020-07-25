@@ -17,12 +17,6 @@ namespace WorkflowEngine
 
             public override void Execute()
             {
-                var currentContext = context as SampleDocumentApprovalWorkflowContext;
-                if (currentContext == null)
-                {
-                    return;
-                }
-
                 Console.WriteLine("Please enter 'approve' or 'decline'.");
                 
                 string decision = Console.ReadLine().ToLower();
@@ -32,7 +26,7 @@ namespace WorkflowEngine
                     return;
                 }
 
-                currentContext.Decision = decision;
+                context.SetValueForProperty("Decision", decision);
             }
         }
 
@@ -44,7 +38,7 @@ namespace WorkflowEngine
             var approvalNode = new DoApprovalNode(context, "IN_APPROVAL");
             var finalNode = new EndNode(context, "FINISHED");
 
-            Transitions.Add(item: new Transition(context)
+            Transitions.Add(new Transition(context)
             {
                 NodeFrom = startNode,
                 NodeTo = approvalNode,
