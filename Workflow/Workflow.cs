@@ -7,6 +7,8 @@ namespace WorkflowEngine.Workflow
 {
     public class Workflow
     {
+        private bool initialized;
+
         public enum STATE
         {
             NOT_RUNNING,
@@ -17,63 +19,84 @@ namespace WorkflowEngine.Workflow
 
         protected WorkflowContext context;
 
-        private List<Node> nodePool;
+        private StartNode startNode;
 
-        public StartNode StartNode
-        {
-            get;
-            set;
-        }
+        private ActionNode currentNode;
 
-        public ActionNode CurrentNode
-        {
-            get;
-            set;
-        }
-
-        public List<Transition.Transition> Transitions
-        {
-            get;
-            set;
-        }
+        private List<Transition.Transition> transitionPool;
 
         public Workflow()
         {
-            nodePool = new List<Node>();
-            Transitions = new List<Transition.Transition>();
+            initialized = false;
+            transitionPool = new List<Transition.Transition>();
+        }
+
+        public void Initialize(StartNode startNode)
+        {
+            this.startNode = startNode;
+            currentNode = startNode;
+            initialized = true;
         }
 
         public void Reset()
         {
             context.Reset();
-            CurrentNode = StartNode;
+            currentNode = startNode;
         }
         
         public void Progress()
         {
-            if (CurrentNode == null)
+            if (!initialized)
+            {
+                throw new Exception("Workflow was not yet initialized.");
+            }
+
+            if (currentNode == null)
             {
                 throw new ArgumentNullException("Current node not defined.");
             }
 
-            if (CurrentNode is EndNode)
+            if (currentNode is EndNode)
             {
-                CurrentNode.Execute();
+                currentNode.Execute();
                 return;
             }
             
-            var firstTransition = Transitions.FirstOrDefault(f => f.NodeFrom.Equals(CurrentNode) && f.CanTransition.Invoke());
+            var firstTransition = transitionPool.FirstOrDefault(f => f.NodeFrom.Equals(currentNode) && f.CanTransition.Invoke());
             if (firstTransition != null)
             {
-                CurrentNode = firstTransition.Execute();
+                currentNode = firstTransition.Execute();
             }
             
-            if (CurrentNode != null)
+            if (currentNode != null)
             {
-                CurrentNode.Execute();
+                currentNode.Execute();
             }
 
             Progress();
+        }
+
+        public void AddTransition(ActionNode nodeFrom, ActionNode nodeTo, Func<bool> condition, Action transitionAction)
+        {
+            if (nodeFrom == null || nodeTo == null)
+            {
+                throw new ArgumentNullException("Must define a start and an end node.");
+            }
+
+            if (nodeFrom.Equals(nodeTo))
+            {
+                throw new Exception("Start node cannot equal end node.");
+            }
+
+            // TODO: circular dependencies
+
+            transitionPool.Add(new Transition.Transition(context)
+            {
+                NodeFrom = nodeFrom,
+                NodeTo = nodeTo,
+                CanTransition = condition,
+                ActionForward = transitionAction
+            });
         }
     }
 }

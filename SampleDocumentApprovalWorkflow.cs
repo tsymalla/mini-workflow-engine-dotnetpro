@@ -12,7 +12,6 @@ namespace WorkflowEngine
         {
             public DoApprovalNode(WorkflowContext context, string name): base(context, name, TYPE.ACTION_NODE)
             {
-
             }
 
             public override void Execute()
@@ -34,16 +33,13 @@ namespace WorkflowEngine
         {
             context = new SampleDocumentApprovalWorkflowContext();
             var startNode = new StartNode(context, "BEGIN");
-            CurrentNode = startNode;
-            StartNode = startNode;
             var approvalNode = new DoApprovalNode(context, "IN_APPROVAL");
             var finalNode = new EndNode(context, "FINISHED");
 
-            Transitions.Add(new Transition(context)
-            {
-                NodeFrom = startNode,
-                NodeTo = approvalNode,
-                CanTransition = () =>
+            Initialize(startNode);
+            
+            AddTransition(startNode, approvalNode,
+                () =>
                 {
                     var currentContext = context as SampleDocumentApprovalWorkflowContext;
                     if (currentContext == null)
@@ -53,51 +49,44 @@ namespace WorkflowEngine
                     
                     return currentContext.ApprovalState == APPROVAL_STATE.UNAPPROVED;
                 },
-                ActionForward = () =>
+                () =>
                 {
                     Console.WriteLine("Going forward to approval state.");
                     Console.WriteLine("Sent e-mail to manager.");
 
                     context.SetValueForProperty<APPROVAL_STATE>("ApprovalState", APPROVAL_STATE.IN_PROGRESS);
                 }
-            });
+            );
 
-            Transitions.Add(new Transition(context)
-            {
-                NodeFrom = approvalNode,
-                NodeTo = finalNode,
-                CanTransition = () => 
+            AddTransition(approvalNode, finalNode,
+                () => 
                 {
                     string decision = context.GetValueForProperty<string>("Decision");
                     var state = context.GetValueForProperty<APPROVAL_STATE>("ApprovalState");
 
                     return decision == "approve" && state == APPROVAL_STATE.IN_PROGRESS;
                 },
-                ActionForward = () =>
+                () =>
                 {
                     Console.WriteLine("Finishing approval workflow.");
-                }
             });
-            
-            Transitions.Add(new Transition(context)
-            {
-                NodeFrom = approvalNode,
-                NodeTo = startNode,
-                CanTransition = () => 
+
+            AddTransition(approvalNode, startNode, 
+                () => 
                 {
                     string decision = context.GetValueForProperty<string>("Decision");
                     var state = context.GetValueForProperty<APPROVAL_STATE>("ApprovalState");
 
                     return decision == "decline" && state == APPROVAL_STATE.IN_PROGRESS;
-                },
-                ActionForward = () =>
+                }, 
+                () =>
                 {
                     context.SetValueForProperty<string>("Decision", null);
                     context.SetValueForProperty<APPROVAL_STATE>("ApprovalState", APPROVAL_STATE.UNAPPROVED);
 
                     Console.WriteLine("Moving back to initial state.");
                 }
-            });
+            );
         }
     }
 }
