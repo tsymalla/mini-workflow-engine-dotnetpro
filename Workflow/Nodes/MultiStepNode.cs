@@ -9,6 +9,7 @@ namespace WorkflowEngine.Workflow.Nodes
 
         public MultiStepNode(WorkflowContext context, string name, TYPE type) : base(context, name, type)
         {
+            steps = new List<Action<WorkflowContext>>();
         }
 
         public void AddStep(Action<WorkflowContext> step)
@@ -16,7 +17,7 @@ namespace WorkflowEngine.Workflow.Nodes
             steps.Add(step);
         }
 
-        public void AddSteps(List<Action> steps)
+        public void AddSteps(List<Action<WorkflowContext>> steps)
         {
             steps.AddRange(steps);
         }

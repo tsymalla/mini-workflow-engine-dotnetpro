@@ -29,15 +29,33 @@ namespace WorkflowEngine
             }
         }
 
+        class PostApprovalNode: MultiStepNode
+        {
+            public PostApprovalNode(WorkflowContext context, string name): base(context, name, TYPE.ACTION_NODE)
+            {
+                AddStep((context) =>
+                {
+                    Console.WriteLine("Executing step 1.");
+                    Console.WriteLine("Your decision: " + context.GetValueForProperty<string>("Decision"));
+                });
+
+                AddStep((context) => 
+                {
+                    Console.WriteLine("Executing step 2.");
+                });
+            }
+        }
+
         public SampleDocumentApprovalWorkflow()
         {
             context = new SampleDocumentApprovalWorkflowContext();
             var startNode = new StartNode(context, "BEGIN");
             var approvalNode = new DoApprovalNode(context, "IN_APPROVAL");
+            var postApprovalNode = new PostApprovalNode(context, "POST_APPROVAL");
             var finalNode = new EndNode(context, "FINISHED");
 
             Initialize(startNode);
-            
+
             AddTransition(startNode, approvalNode,
                 () =>
                 {
@@ -58,7 +76,7 @@ namespace WorkflowEngine
                 }
             );
 
-            AddTransition(approvalNode, finalNode,
+            AddTransition(approvalNode, postApprovalNode,
                 () => 
                 {
                     string decision = context.GetValueForProperty<string>("Decision");
@@ -69,7 +87,13 @@ namespace WorkflowEngine
                 () =>
                 {
                     Console.WriteLine("Finishing approval workflow.");
-            });
+                }
+            );
+
+            AddTransition(postApprovalNode, finalNode,
+                () => true,
+                null
+            );
 
             AddTransition(approvalNode, startNode, 
                 () => 

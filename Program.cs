@@ -17,13 +17,13 @@ namespace WorkflowEngine
             WorkflowEngine.Execute(sequentialRunner);
             Console.WriteLine("Sequential workflow finished.");
             
-            Console.WriteLine("Running repeated workflow.");
+            /*Console.WriteLine("Running repeated workflow.");
             SampleDocumentApprovalWorkflow wf2 = new SampleDocumentApprovalWorkflow();
             RepeatedRunner repeatedRunner = new RepeatedRunner(3);
             repeatedRunner.AddWorkflow(wf2);
 
             WorkflowEngine.Execute(repeatedRunner);
-            Console.WriteLine("Repeated workflow finished.");
+            Console.WriteLine("Repeated workflow finished.");*/
         }
     }
 }
