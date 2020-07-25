@@ -1,4 +1,4 @@
-using WorkflowEngine.Workflow.Runner;
+using System;
 
 namespace WorkflowEngine.Workflow.Nodes
 {
@@ -24,13 +24,7 @@ namespace WorkflowEngine.Workflow.Nodes
             get;
             set;
         }
-
-        public Activity Activity
-        {
-            get;
-            set;
-        }
-
+        
         public Node(WorkflowContext context, string name, TYPE type)
         {
             this.context = context;

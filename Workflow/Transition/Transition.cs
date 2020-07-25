@@ -51,10 +51,6 @@ namespace WorkflowEngine.Workflow.Transition
             this.context = context;
         }
 
-        public void OnEnter()
-        {
-        }
-        
         public ActionNode Execute()
         {
             if (this.CanTransition != null)

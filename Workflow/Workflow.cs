@@ -55,7 +55,6 @@ namespace WorkflowEngine.Workflow
             var firstTransition = Transitions.FirstOrDefault(f => f.NodeFrom.Equals(CurrentNode) && f.CanTransition.Invoke());
             if (firstTransition != null)
             {
-                firstTransition.OnEnter();
                 CurrentNode = firstTransition.Execute();
             }
             

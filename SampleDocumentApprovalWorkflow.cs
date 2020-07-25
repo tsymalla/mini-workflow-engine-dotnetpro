@@ -109,6 +109,13 @@ namespace WorkflowEngine
                 },
                 ActionForward = () =>
                 {
+                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
+                    if (currentContext != null)
+                    {
+                        currentContext.Decision = null;
+                        currentContext.ApprovalState = APPROVAL_STATE.UNAPPROVED;
+                    }
+
                     Console.WriteLine("Moving back to initial state.");
                 }
             });
