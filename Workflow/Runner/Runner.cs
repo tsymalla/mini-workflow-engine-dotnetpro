@@ -22,5 +22,11 @@ namespace WorkflowEngine.Workflow.Runner
         }
 
         public abstract void Run();
+
+        public void RunStep(Workflow workflow)
+        {
+            workflow.Progress();
+            workflow.Reset();
+        }
     }
 }

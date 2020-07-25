@@ -35,6 +35,7 @@ namespace WorkflowEngine
             context = new SampleDocumentApprovalWorkflowContext();
             var startNode = new StartNode(context, "BEGIN");
             CurrentNode = startNode;
+            StartNode = startNode;
             var approvalNode = new DoApprovalNode(context, "IN_APPROVAL");
             var finalNode = new EndNode(context, "FINISHED");
 

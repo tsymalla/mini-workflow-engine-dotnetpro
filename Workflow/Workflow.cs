@@ -15,11 +15,15 @@ namespace WorkflowEngine.Workflow
             FINISHED
         };
 
-        private STATE state = STATE.NOT_RUNNING;
-
         protected WorkflowContext context;
 
         private List<Node> nodePool;
+
+        public StartNode StartNode
+        {
+            get;
+            set;
+        }
 
         public ActionNode CurrentNode
         {
@@ -38,6 +42,12 @@ namespace WorkflowEngine.Workflow
             nodePool = new List<Node>();
             Transitions = new List<Transition.Transition>();
         }
+
+        public void Reset()
+        {
+            context.Reset();
+            CurrentNode = StartNode;
+        }
         
         public void Progress()
         {
@@ -48,7 +58,7 @@ namespace WorkflowEngine.Workflow
 
             if (CurrentNode is EndNode)
             {
-                this.state = STATE.FINISHED;
+                CurrentNode.Execute();
                 return;
             }
             

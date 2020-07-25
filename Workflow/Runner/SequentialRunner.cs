@@ -8,7 +8,7 @@ namespace WorkflowEngine.Workflow.Runner
         {
             foreach (Workflow workflow in workflows)
             {
-                workflow.Progress();
+                RunStep(workflow);
             }
         }
     }

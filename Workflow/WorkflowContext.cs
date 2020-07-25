@@ -4,6 +4,13 @@ namespace WorkflowEngine.Workflow
 {
     public abstract class WorkflowContext
     {
+        public WorkflowContext()
+        {
+            Reset();
+        }
+        
+        public abstract void Reset();
+
         public T GetValueForField<T>(string fieldName)
         {
             var typeInfo = this.GetType();

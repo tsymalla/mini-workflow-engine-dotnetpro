@@ -9,11 +9,21 @@ namespace WorkflowEngine
     {
         static void Main(string[] args)
         {
-            SampleDocumentApprovalWorkflow wf = new SampleDocumentApprovalWorkflow();
-            SequentialRunner runner = new SequentialRunner();
-            runner.AddWorkflow(wf);
+            Console.WriteLine("Running sequential workflow.");
+            SampleDocumentApprovalWorkflow wf1 = new SampleDocumentApprovalWorkflow();
+            SequentialRunner sequentialRunner = new SequentialRunner();
+            sequentialRunner.AddWorkflow(wf1);
 
-            WorkflowEngine.Execute(runner);
+            WorkflowEngine.Execute(sequentialRunner);
+            Console.WriteLine("Sequential workflow finished.");
+            
+            Console.WriteLine("Running repeated workflow.");
+            SampleDocumentApprovalWorkflow wf2 = new SampleDocumentApprovalWorkflow();
+            RepeatedRunner repeatedRunner = new RepeatedRunner(3);
+            repeatedRunner.AddWorkflow(wf2);
+
+            WorkflowEngine.Execute(repeatedRunner);
+            Console.WriteLine("Repeated workflow finished.");
         }
     }
 }

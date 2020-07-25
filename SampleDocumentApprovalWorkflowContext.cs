@@ -14,9 +14,10 @@ namespace WorkflowEngine
         public APPROVAL_STATE ApprovalState { get; set; }
         public string Decision { get; set; }
 
-        public SampleDocumentApprovalWorkflowContext()
+        public override void Reset()
         {
             ApprovalState = APPROVAL_STATE.UNAPPROVED;
+            Decision = null;
         }
     }
 }
