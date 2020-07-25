@@ -63,13 +63,7 @@ namespace WorkflowEngine
                     Console.WriteLine("Going forward to approval state.");
                     Console.WriteLine("Sent e-mail to manager.");
 
-                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
-                    if (currentContext == null)
-                    {
-                        return;
-                    }
-
-                    currentContext.ApprovalState = APPROVAL_STATE.IN_PROGRESS;
+                    context.SetValueForProperty<APPROVAL_STATE>("ApprovalState", APPROVAL_STATE.IN_PROGRESS);
                 }
             });
 
@@ -79,13 +73,10 @@ namespace WorkflowEngine
                 NodeTo = finalNode,
                 CanTransition = () => 
                 {
-                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
-                    if (currentContext == null)
-                    {
-                        return false;
-                    }
+                    string decision = context.GetValueForProperty<string>("Decision");
+                    var state = context.GetValueForProperty<APPROVAL_STATE>("ApprovalState");
 
-                    return currentContext.Decision == "approve" && currentContext.ApprovalState == APPROVAL_STATE.IN_PROGRESS;
+                    return decision == "approve" && state == APPROVAL_STATE.IN_PROGRESS;
                 },
                 ActionForward = () =>
                 {
@@ -99,22 +90,15 @@ namespace WorkflowEngine
                 NodeTo = startNode,
                 CanTransition = () => 
                 {
-                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
-                    if (currentContext == null)
-                    {
-                        return false;
-                    }
+                    string decision = context.GetValueForProperty<string>("Decision");
+                    var state = context.GetValueForProperty<APPROVAL_STATE>("ApprovalState");
 
-                    return currentContext.Decision == "decline" && currentContext.ApprovalState == APPROVAL_STATE.IN_PROGRESS;
+                    return decision == "decline" && state == APPROVAL_STATE.IN_PROGRESS;
                 },
                 ActionForward = () =>
                 {
-                    var currentContext = context as SampleDocumentApprovalWorkflowContext;
-                    if (currentContext != null)
-                    {
-                        currentContext.Decision = null;
-                        currentContext.ApprovalState = APPROVAL_STATE.UNAPPROVED;
-                    }
+                    context.SetValueForProperty<string>("Decision", null);
+                    context.SetValueForProperty<APPROVAL_STATE>("ApprovalState", APPROVAL_STATE.UNAPPROVED);
 
                     Console.WriteLine("Moving back to initial state.");
                 }
