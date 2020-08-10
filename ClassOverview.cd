@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WorkflowEngine.Workflow.Nodes.ActionNode">
+    <Position X="15" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workflow\Nodes\ActionNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Nodes.EndNode" Collapsed="true">
+    <Position X="15" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workflow\Nodes\EndNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Nodes.MultiStepNode">
+    <Position X="17.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAQAAAAQAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Workflow\Nodes\MultiStepNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Nodes.Node">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="WorkflowEngine.Workflow.Nodes.Node.TYPE" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Workflow\Nodes\Node.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workflow\Nodes\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Nodes.StartNode" Collapsed="true">
+    <Position X="12.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workflow\Nodes\StartNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Runner.RepeatedRunner">
+    <Position X="20.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAI=</HashCode>
+      <FileName>Workflow\Runner\RepeatedRunner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Runner.Runner">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQBAAAI=</HashCode>
+      <FileName>Workflow\Runner\Runner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Runner.SequentialRunner">
+    <Position X="22.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Workflow\Runner\SequentialRunner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Transitions.Transition">
+    <Position X="25.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACACAAAAAQAQQAAAAAAAAAAAAAAAAIBAAAAAAAAAA=</HashCode>
+      <FileName>Workflow\Transitions\Transition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.Workflow">
+    <Position X="27" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAABAABQEAAAAAAAAAAAAAAAKAQAAAAACAAAA=</HashCode>
+      <FileName>Workflow\Workflow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.Workflow.WorkflowContext" Collapsed="true">
+    <Position X="25.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAoAA=</HashCode>
+      <FileName>Workflow\WorkflowContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkflowEngine.WorkflowEngine" Collapsed="true">
+    <Position X="27" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Workflow\WorkflowEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

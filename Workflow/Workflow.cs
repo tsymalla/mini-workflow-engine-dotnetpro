@@ -10,14 +10,6 @@ namespace WorkflowEngine.Workflow
     {
         private bool initialized;
 
-        public enum STATE
-        {
-            NOT_RUNNING,
-            RUNNING,
-            ON_HOLD,
-            FINISHED
-        };
-
         protected WorkflowContext context;
 
         private StartNode startNode;
