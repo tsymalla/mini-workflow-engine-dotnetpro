@@ -1,7 +1,7 @@
 using System;
 using WorkflowEngine.Workflow;
 using WorkflowEngine.Workflow.Nodes;
-using WorkflowEngine.Workflow.Transition;
+using WorkflowEngine.Workflow.Transitions;
 using static WorkflowEngine.SampleDocumentApprovalWorkflowContext;
 
 namespace WorkflowEngine

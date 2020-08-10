@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WorkflowEngine.Workflow.Nodes;
+using WorkflowEngine.Workflow.Transitions;
 
 namespace WorkflowEngine.Workflow
 {
@@ -23,12 +24,12 @@ namespace WorkflowEngine.Workflow
 
         private ActionNode currentNode;
 
-        private List<Transition.Transition> transitionPool;
+        private List<Transition> transitionPool;
 
         public Workflow()
         {
             initialized = false;
-            transitionPool = new List<Transition.Transition>();
+            transitionPool = new List<Transition>();
         }
 
         public void Initialize(StartNode startNode)
@@ -90,7 +91,7 @@ namespace WorkflowEngine.Workflow
 
             // TODO: circular dependencies
 
-            transitionPool.Add(new Transition.Transition(context)
+            transitionPool.Add(new Transition(context)
             {
                 NodeFrom = nodeFrom,
                 NodeTo = nodeTo,

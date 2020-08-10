@@ -11,7 +11,7 @@ namespace WorkflowEngine.Workflow.Nodes
             ACTION_NODE
         };
         
-        protected readonly WorkflowContext context;
+        protected WorkflowContext context;
 
         public TYPE type
         {
@@ -24,11 +24,15 @@ namespace WorkflowEngine.Workflow.Nodes
             get;
             set;
         }
-        
+
+        protected Node()
+        {
+        }   
+
         public Node(WorkflowContext context, string name, TYPE type)
         {
             this.context = context;
-            this.Name = name;
+            Name = name;
         }
     }
 }

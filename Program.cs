@@ -1,6 +1,6 @@
 ﻿using System;
 using WorkflowEngine.Workflow.Nodes;
-using WorkflowEngine.Workflow.Transition;
+using WorkflowEngine.Workflow.Transitions;
 using WorkflowEngine.Workflow.Runner;
 
 namespace WorkflowEngine

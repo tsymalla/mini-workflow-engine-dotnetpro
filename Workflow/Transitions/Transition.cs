@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using WorkflowEngine.Workflow.Nodes;
 
-namespace WorkflowEngine.Workflow.Transition
+namespace WorkflowEngine.Workflow.Transitions
 {
     public class Transition
     {
