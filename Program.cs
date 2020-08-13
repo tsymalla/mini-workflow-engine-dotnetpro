@@ -1,7 +1,8 @@
 ﻿using System;
+using WorkflowEngine.Workflow;
 using WorkflowEngine.Workflow.Nodes;
 using WorkflowEngine.Workflow.Transitions;
-using WorkflowEngine.Workflow.Runner;
+using WorkflowEngine.Workflow.Runners;
 
 namespace WorkflowEngine
 {
@@ -14,7 +15,7 @@ namespace WorkflowEngine
             SequentialRunner sequentialRunner = new SequentialRunner();
             sequentialRunner.AddWorkflow(wf1);
 
-            WorkflowEngine.Execute(sequentialRunner);
+            Workflow.WorkflowEngine.Execute(sequentialRunner);
             Console.WriteLine("Sequential workflow finished.");
             
             /*Console.WriteLine("Running repeated workflow.");
