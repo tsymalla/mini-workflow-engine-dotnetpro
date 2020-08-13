@@ -1,6 +1,6 @@
 
 
-namespace WorkflowEngine.Workflow.Runner
+namespace WorkflowEngine.Workflow.Runners
 {
     public class RepeatedRunner: Runner
     {
@@ -10,7 +10,7 @@ namespace WorkflowEngine.Workflow.Runner
         public RepeatedRunner(uint times)
         {
             this.times = times;
-            this.executionCount = 0;
+            executionCount = 0;
         }
 
         public override void Run()

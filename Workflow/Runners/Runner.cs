@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WorkflowEngine.Workflow.Runner
+namespace WorkflowEngine.Workflow.Runners
 {
     public abstract class Runner
     {
@@ -26,7 +26,6 @@ namespace WorkflowEngine.Workflow.Runner
         public void RunStep(Workflow workflow)
         {
             workflow.Progress();
-            workflow.Reset();
         }
     }
 }

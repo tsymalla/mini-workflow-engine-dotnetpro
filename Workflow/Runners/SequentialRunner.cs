@@ -1,6 +1,6 @@
 
 
-namespace WorkflowEngine.Workflow.Runner
+namespace WorkflowEngine.Workflow.Runners
 {
     public class SequentialRunner: Runner
     {

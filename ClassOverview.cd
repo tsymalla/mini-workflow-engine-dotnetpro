@@ -84,7 +84,7 @@
       <FileName>Workflow\WorkflowContext.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WorkflowEngine.WorkflowEngine" Collapsed="true">
+  <Class Name="WorkflowEngine.Workflow.WorkflowEngine" Collapsed="true">
     <Position X="27" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
