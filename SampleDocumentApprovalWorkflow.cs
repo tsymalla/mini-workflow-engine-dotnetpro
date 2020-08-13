@@ -92,7 +92,10 @@ namespace WorkflowEngine
 
             AddTransition(postApprovalNode, finalNode,
                 () => true,
-                null
+                () =>
+                {
+                    context.SetValueForProperty<APPROVAL_STATE>("ApprovalState", APPROVAL_STATE.APPROVED);
+                }
             );
 
             AddTransition(approvalNode, startNode, 
