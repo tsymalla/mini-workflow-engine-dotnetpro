@@ -81,8 +81,7 @@ namespace WorkflowEngine.Workflow
                 throw new Exception("Start node cannot equal end node.");
             }
 
-            // TODO: circular dependencies
-
+            // Does not prevent the user from creating circular dependencies.
             transitionPool.Add(new Transition(context)
             {
                 NodeFrom = nodeFrom,
